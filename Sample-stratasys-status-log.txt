@@ -192,4 +192,3 @@ set machineStatus(previousJob) {
 
 set machineStatus(queue) {
 	};
-
