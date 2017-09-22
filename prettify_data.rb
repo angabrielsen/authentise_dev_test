@@ -1,5 +1,5 @@
 def parse_data
-  data = File.read("./Sample-stratasys-status-log.txt")
+  data = File.read("./machine_log.txt")
     .strip
     .gsub(/\r\n?/, "\n")
     .split(";")
