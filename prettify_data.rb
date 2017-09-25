@@ -9,7 +9,7 @@ class Prettify
 	    |item| item.strip.split(";")
 	  }
 
-	  parsedData
+	  puts parsedData.length
 	end
 end
 
