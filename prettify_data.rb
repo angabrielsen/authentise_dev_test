@@ -1,5 +1,7 @@
+require "json"
+
 class Prettify
-	def parse_data
+	def parse_file
 	  data = File.read("./machine_log.txt")
 	    .strip
 	    .gsub(/\r\n?/, "\n")
@@ -9,12 +11,37 @@ class Prettify
 	    |item| item.strip.split(";")
 	  }
 
-	  puts parsedData.length
+	  parsedData
+	end
+
+	def parse_individual
+		allActions = parse_file
+
+		splitActionsData = allActions.map {
+			|action| action.first
+				.gsub(/\n\t-/, " ")
+				.gsub(") {", ");{")
+				.gsub(/\n/, " ")
+				.split(";")
+		}
+
+		dataHash = {}
+
+		processData = splitActionsData.each {
+			|x| dataHash[:subtype] = x.first
+				.to_s[/\(([^)]+)\)/]
+				.gsub("(", "")
+				.gsub(")", "")
+				dataHash[:data] = x.last
+				dataHash[:action] = x.to_s[/^([\w\-]+)/]
+		}
+
+		dataHash
 	end
 end
 
 =begin
 execute from command line
 
-ruby -r "./prettify_data.rb" -e "Prettify.new.parse_data"
+ruby -r "./prettify_data.rb" -e "Prettify.new.parse_individual"
 =end
