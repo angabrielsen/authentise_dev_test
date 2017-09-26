@@ -32,7 +32,7 @@ class Prettify
 				dataHash[:action] = x.to_s[/^([\w\-]+)/]
 		}
 
-		puts dataHash
+		puts JSON.pretty_generate(dataHash)
 	end
 end
 
