@@ -36,7 +36,7 @@ class Prettify
 					.gsub("(", "")
 		}
 
-		puts JSON.pretty_generate(dataHash)
+		JSON.pretty_generate(dataHash)
 	end
 end
 

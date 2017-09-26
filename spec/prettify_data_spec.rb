@@ -20,11 +20,11 @@ end
 
 RSpec.describe Prettify, "#parse_individual" do
   context "after parsing data" do
-    it "creates hash" do
+    it "creates prettified string" do
       prettify = Prettify.new
       separated = prettify.parse_individual
 
-      expect(separated.class).to eq Hash
+      expect(separated.class).to eq String
     end
   end
 end
