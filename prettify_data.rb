@@ -20,23 +20,19 @@ class Prettify
 		splitActionsData = allActions.map {
 			|action| action.first
 				.gsub(/\n\t-/, " ")
-				.gsub(") {", ");{")
-				.gsub(/\n/, " ")
-				.split(";")
 		}
 
 		dataHash = {}
 
 		processData = splitActionsData.each {
-			|x| dataHash[:subtype] = x.first
-				.to_s[/\(([^)]+)\)/]
+			|x| dataHash[:subtype] = x[/\(([^)]+)\)/]
 				.gsub("(", "")
 				.gsub(")", "")
-				dataHash[:data] = x.last
+				dataHash[:data] = x[/\{([^)]+)\}/]
 				dataHash[:action] = x.to_s[/^([\w\-]+)/]
 		}
 
-		dataHash
+		puts dataHash
 	end
 end
 
