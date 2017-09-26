@@ -27,21 +27,24 @@ class Prettify
 		dataHash = {}
 
 		processData = splitActionsData.each {
-			|x| dataHash[:action] = x.to_s[/^([\w\-]+)/]
-				dataHash[:data] = x[/\{([^)]+)\}/]
-					.gsub("{ ", "")
-					.gsub("\n}", "")
+			|x| dataHash[:action] = x[/^([\w\-]+)/]
 				dataHash[:subtype] = x[/\(([^)]+)\)/]
 					.gsub("(", "")
 					.gsub(")", "")
 				dataHash[:type] = x[/\ ([^)]+)\(/]
 					.gsub(" ", "")
 					.gsub("(", "")
+				dataHash[:data] = x[/\{([^)]+)\}/]
+					.gsub(/\n/, " ")
+					.gsub("{ ", "")
+					.gsub(" }", "")
+					.split
+					.each_slice(2) {
+						|x, y| puts "#{x}, #{y}"
+					}
 		}
 
-		json = JSON.pretty_generate(dataHash)
-
-		puts json
+		puts JSON.pretty_generate(dataHash)
 	end
 end
 
