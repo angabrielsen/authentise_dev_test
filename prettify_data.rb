@@ -1,4 +1,5 @@
 require "json"
+require "enumerator"
 
 class Prettify
 	def parse_file
@@ -28,6 +29,8 @@ class Prettify
 		processData = splitActionsData.each {
 			|x| dataHash[:action] = x.to_s[/^([\w\-]+)/]
 				dataHash[:data] = x[/\{([^)]+)\}/]
+					.gsub("{ ", "")
+					.gsub("\n}", "")
 				dataHash[:subtype] = x[/\(([^)]+)\)/]
 					.gsub("(", "")
 					.gsub(")", "")
@@ -36,7 +39,9 @@ class Prettify
 					.gsub("(", "")
 		}
 
-		JSON.pretty_generate(dataHash)
+		json = JSON.pretty_generate(dataHash)
+
+		puts json
 	end
 end
 

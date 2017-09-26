@@ -1,4 +1,5 @@
 require './prettify_data.rb'
+require 'json'
 
 RSpec.describe Prettify, "#parse_data" do
   context "when reading local file" do
@@ -26,5 +27,12 @@ RSpec.describe Prettify, "#parse_individual" do
 
       expect(separated.class).to eq String
     end
+
+    # it "string is formatted correctly" do
+    #   prettify = Prettify.new
+    #   separated = prettify.parse_individual
+
+    #   expect(separated).to eq JSON.pretty_generate(separated)
+    # end
   end
 end
