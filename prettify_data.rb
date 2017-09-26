@@ -20,16 +20,20 @@ class Prettify
 		splitActionsData = allActions.map {
 			|action| action.first
 				.gsub(/\n\t-/, " ")
+				.gsub(/\n\t/, " ")
 		}
 
 		dataHash = {}
 
 		processData = splitActionsData.each {
-			|x| dataHash[:subtype] = x[/\(([^)]+)\)/]
-				.gsub("(", "")
-				.gsub(")", "")
+			|x| dataHash[:action] = x.to_s[/^([\w\-]+)/]
 				dataHash[:data] = x[/\{([^)]+)\}/]
-				dataHash[:action] = x.to_s[/^([\w\-]+)/]
+				dataHash[:subtype] = x[/\(([^)]+)\)/]
+					.gsub("(", "")
+					.gsub(")", "")
+				dataHash[:type] = x[/\ ([^)]+)\(/]
+					.gsub(" ", "")
+					.gsub("(", "")
 		}
 
 		puts JSON.pretty_generate(dataHash)
